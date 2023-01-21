@@ -1,0 +1,12 @@
+name: ZPokeBoost
+main: io.github.yuazer.zpokeboost.Main
+version: 0.1
+api-version: 1.16
+depend:
+  - ZaxLib
+  - PlaceholderAPI
+commands:
+  zpokeboost:
+    aliases:
+      - zpbt
+    description: the command for this plugin

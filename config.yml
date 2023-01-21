@@ -1,0 +1,31 @@
+Message:
+  reload: "&a重载成功！"
+  successSave: "&a存储队伍成功！"
+  quitSuccess: "&a退出无尽试炼塔成功！"
+  quitFail: "&c您并没有加入无尽试炼!"
+  next: "&a下一场对战开始!"
+  noTimes: "&c您的挑战次数不够了!"
+#次数限制
+Times:
+  #默认3次
+  default: 3
+  #每天00:00刷新
+  reset: "0000"
+  commands:
+    - "broadcast 精灵无尽挑战塔挑战次数重置!"
+#无尽试炼战胜/战败指令 (身份:控制台)
+Commands:
+  #战胜指令
+  win:
+    #次数，从大到小写
+    20:
+      - "say %player% 已经完成了20次%tower%的无尽试炼！"
+      - "give %player% STONE 2"
+    10:
+      - "say %player% 已经完成了10次%tower%的无尽试炼！"
+      - "give %player% STONE 1"
+    3:
+      - "say %player% 已经完成了3次%tower%的无尽试炼"
+  #失败指令
+  lose:
+    - "say %player%挑战%tower%试炼结束!"
