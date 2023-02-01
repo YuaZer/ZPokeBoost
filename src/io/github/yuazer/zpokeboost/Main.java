@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends JavaPlugin {
@@ -33,6 +34,7 @@ public class Main extends JavaPlugin {
         getLogger().info("§b作者:Z菌[QQ:1109132]");
         getLogger().info("§b版本:§e" + getDescription().getVersion());
         saveDefaultConfig();
+        prepareDir();
         Bukkit.getPluginCommand("zpokeboost").setExecutor(this);
         Bukkit.getPluginManager().registerEvents(new BattleListener(), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
@@ -47,6 +49,17 @@ public class Main extends JavaPlugin {
                 }
             }
         }.runTaskTimerAsynchronously(this, 0L, 20 * 60L);
+    }
+
+    public void prepareDir() {
+        File file = new File("plugins/ZPokeBoost/TowerSetting");
+        File file1 = new File("plugins/ZPokeBoost/PlayerData");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        if (!file1.exists()) {
+            file1.mkdir();
+        }
     }
 
     @Override
@@ -84,7 +97,7 @@ public class Main extends JavaPlugin {
                 sender.sendMessage("§c精灵无尽试炼 - §a指令帮助");
                 sender.sendMessage("§e/zpokeboost §a简写-> §e/zpbt");
                 sender.sendMessage("§e/zpokeboost join [试炼塔名] §a- §b加入该试炼塔");
-                sender.sendMessage("§e/zpokeboost check §a- §b查看自己剩余挑战次数");
+                sender.sendMessage("§e/zpokeboost check [试炼塔名] §a- §b查看自己剩余挑战次数");
                 if (sender.isOp()) {
                     sender.sendMessage("§e/zpokeboost setTeam [试炼塔名] §a- §b将背包中的精灵快速存储为试炼塔精灵队伍(试炼塔最多6只精灵)");
                     sender.sendMessage("§e/zpokeboost setTimes [玩家ID] [次数] §a- §b设置该玩家挑战次数");
@@ -92,13 +105,17 @@ public class Main extends JavaPlugin {
                 }
             }
             if (args[0].equalsIgnoreCase("check")) {
-                sender.sendMessage(String.valueOf(DataUtils.getTimes((Player) sender)));
+                try {
+                    sender.sendMessage(String.valueOf(DataUtils.getTimes((Player) sender, args[1])));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
             if (args[0].equalsIgnoreCase("setTimes") && sender.isOp()) {
                 Player player = Bukkit.getPlayer(args[1]);
                 try {
-                    DataUtils.setTimes(player, Integer.parseInt(args[2]));
+                    DataUtils.setTimes(player, Integer.parseInt(args[2]),args[3]);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ArrayIndexOutOfBoundsException e1) {
@@ -111,7 +128,7 @@ public class Main extends JavaPlugin {
                     Player player = (Player) sender;
                     String towerName = args[1];
                     try {
-                        if (DataUtils.getTimes(player) > 0) {
+                        if (DataUtils.getTimes(player, towerName) > 0) {
                             BattleUtils.battlePokemon(player, DataUtils.getTeam_NBT(towerName));
                             DataUtils.setState(player.getUniqueId(), args[1]);
                         } else {

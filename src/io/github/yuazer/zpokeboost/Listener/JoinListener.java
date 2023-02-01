@@ -1,9 +1,5 @@
 package io.github.yuazer.zpokeboost.Listener;
 
-import io.github.yuazer.zaxlib.Utils.YamlUtils;
-import io.github.yuazer.zpokeboost.Main;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,11 +17,11 @@ public class JoinListener implements Listener {
         if (!file.getParentFile().exists()) {
             Files.createDirectory(file.getParentFile().toPath());
         }
-        if (!file.exists()) {
-            file.createNewFile();
-            FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
-            conf.set("times", YamlUtils.getConfigInt("Times.default", Main.pluginName));
-            conf.save(file);
-        }
+//        if (!file.exists()) {
+//            file.createNewFile();
+//            FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
+//            conf.set("times", YamlUtils.getConfigInt("Times.default", Main.pluginName));
+//            conf.save(file);
+//        }
     }
 }

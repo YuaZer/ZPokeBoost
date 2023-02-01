@@ -4,6 +4,8 @@ import io.github.yuazer.zpokeboost.Utils.DataUtils;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+
 public class TimesHook extends PlaceholderHook {
     private static final String hook_name = "zpokeboost";
 
@@ -12,9 +14,17 @@ public class TimesHook extends PlaceholderHook {
         if (p == null) {
             return "";
         }
-        if (indentifier.equalsIgnoreCase("times")) {
-            return String.valueOf(DataUtils.getTimes(p));
+        if (indentifier.contains("_")) {
+            String[] args = indentifier.split("_");
+            if (args[0].equalsIgnoreCase("times")) {
+                try {
+                    return String.valueOf(DataUtils.getTimes(p, args[1]));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
         return "error";
     }
 

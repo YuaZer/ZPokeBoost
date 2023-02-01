@@ -3,6 +3,7 @@ package io.github.yuazer.zpokeboost.Utils;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import io.github.yuazer.zaxlib.Utils.PokeUtils;
+import io.github.yuazer.zaxlib.Utils.YamlUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -21,18 +22,35 @@ public class DataUtils {
     public static HashMap<UUID, String> getPlayerState() {
         return playerState;
     }
+
     public static HashMap<UUID, Integer> getPlayerWinTimes() {
         return playerWinTimes;
     }
-    public static int getTimes(Player player) {
-        File file = new File("plugins/ZPokeBoost/Times/" + player.getName() + ".yml");
-        return YamlConfiguration.loadConfiguration(file).getInt("times");
+
+    public static void getDefaultTowerTimes(String towerName) {
+        YamlConfiguration conf = YamlConfiguration.loadConfiguration(new File("plugins/ZPokeBoost/TowerSetting/" + towerName + ".yml"));
+        if (conf.getString("times").equalsIgnoreCase("null") || conf.getString("times") == null) {
+            return;
+        }
     }
 
-    public static void setTimes(Player player, int times) throws IOException {
+    /**
+     * 获取无尽试炼挑战次数Map
+     */
+    public static int getTimes(Player player, String towerName) throws IOException {
         File file = new File("plugins/ZPokeBoost/Times/" + player.getName() + ".yml");
         YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
-        conf.set("times", times);
+        if (conf.getString(towerName + ".times").equalsIgnoreCase("null") || conf.getString(towerName + ".times") == null) {
+            YamlConfiguration conf1 = YamlConfiguration.loadConfiguration(new File("plugins/ZPokeBoost/TowerSetting/" + towerName + ".yml"));
+            DataUtils.setTimes(player, conf1.getInt(towerName + ".default"), towerName);
+        }
+        return YamlConfiguration.loadConfiguration(file).getInt(towerName + ".times");
+    }
+
+    public static void setTimes(Player player, int times, String towerName) throws IOException {
+        File file = new File("plugins/ZPokeBoost/Times/" + player.getName() + ".yml");
+        YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
+        conf.set(towerName + ".times", times);
         conf.save(file);
     }
 
@@ -51,7 +69,7 @@ public class DataUtils {
     public static void setTeam_NBT(Player player, String towerName) throws IOException {
         int i = 0;
         for (Pokemon pokemon : StorageProxy.getParty(player.getUniqueId()).getTeam()) {
-            File file = new File("plugins/ZPokeBoost/" + towerName + "/" + i + ".zps");
+            File file = new File("plugins/ZPokeBoost/TeamSave/" + towerName + "/" + i + ".zps");
             if (!file.getParentFile().exists()) {
                 Files.createDirectory(file.getParentFile().toPath());
             }
@@ -62,7 +80,7 @@ public class DataUtils {
 
     public static List<Pokemon> getTeam_NBT(String towerName) throws IOException {
         List<Pokemon> pokemons = new ArrayList<>();
-        File file1 = new File("plugins/ZPokeBoost/" + towerName);
+        File file1 = new File("plugins/ZPokeBoost/TeamSave/" + towerName);
         for (File file : file1.listFiles()) {
             pokemons.add(PokeUtils.getPokemonInFile_NBT(file));
         }
