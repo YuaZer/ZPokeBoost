@@ -5,45 +5,18 @@ Message:
   quitFail: "&c您并没有加入无尽试炼!"
   next: "&a下一场对战开始!"
   noTimes: "&c您的挑战次数不够了!"
-金币试炼:
-  Times:
-    #默认3次
-    default: 3
-    #每天00:00刷新
-    reset: "0000"
-    commands:
-      - "broadcast 精灵无尽挑战塔挑战次数重置!"
-  Commands:
-    win:
-      20:
-        - "say %player% 已经完成了20次%tower%的无尽试炼！"
-        - "give %player% STONE 2"
-      10:
-        - "say %player% 已经完成了10次%tower%的无尽试炼！"
-        - "give %player% STONE 1"
-      3:
-        - "say %player% 已经完成了3次%tower%的无尽试炼"
-    lose:
-      - "say %player%挑战%tower%试炼结束!"
-无尽试炼:
-  Times:
-    #默认1次
-    default: 1
-    commands:
-      - "broadcast 精灵无尽挑战塔挑战次数重置!"
-  #战胜/战败指令 (身份:控制台)
-  Commands:
-  #战胜指令
-  win:
-    #次数，从大到小写
-    20:
-      - "say %player% 已经完成了20次%tower%的无尽试炼！"
-      - "give %player% STONE 2"
-    10:
-      - "say %player% 已经完成了10次%tower%的无尽试炼！"
-      - "give %player% STONE 1"
-    3:
-      - "say %player% 已经完成了3次%tower%的无尽试炼"
-  #失败指令
-  lose:
-    - "say %player%挑战%tower%试炼结束!"
+Times:
+  reset: "0000"
+Tower:
+  金币试炼:
+    Times:
+      #默认3次
+      default: 3
+      commands:
+        - "broadcast 金币挑战塔挑战次数重置!"
+  无尽试炼:
+    Times:
+      #默认1次
+      default: 1
+      commands:
+        - "broadcast 精灵无尽挑战塔挑战次数重置!"

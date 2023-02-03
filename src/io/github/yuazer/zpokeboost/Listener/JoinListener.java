@@ -17,6 +17,9 @@ public class JoinListener implements Listener {
         if (!file.getParentFile().exists()) {
             Files.createDirectory(file.getParentFile().toPath());
         }
+        if (!file.exists()){
+            file.createNewFile();
+        }
 //        if (!file.exists()) {
 //            file.createNewFile();
 //            FileConfiguration conf = YamlConfiguration.loadConfiguration(file);

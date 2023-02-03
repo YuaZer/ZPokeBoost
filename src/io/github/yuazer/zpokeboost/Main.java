@@ -53,7 +53,7 @@ public class Main extends JavaPlugin {
 
     public void prepareDir() {
         File file = new File("plugins/ZPokeBoost/TowerSetting");
-        File file1 = new File("plugins/ZPokeBoost/PlayerData");
+        File file1 = new File("plugins/ZPokeBoost/TeamSave");
         if (!file.exists()) {
             file.mkdir();
         }
@@ -105,11 +105,7 @@ public class Main extends JavaPlugin {
                 }
             }
             if (args[0].equalsIgnoreCase("check")) {
-                try {
-                    sender.sendMessage(String.valueOf(DataUtils.getTimes((Player) sender, args[1])));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                sender.sendMessage(String.valueOf(DataUtils.getTimes((Player) sender, args[1])));
                 return true;
             }
             if (args[0].equalsIgnoreCase("setTimes") && sender.isOp()) {
