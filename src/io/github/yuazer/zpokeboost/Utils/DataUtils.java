@@ -41,16 +41,17 @@ public class DataUtils {
         YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
         try {
             if (conf.getString(towerName + ".times").equalsIgnoreCase("null") || conf.getString(towerName + ".times") == null) {
-                DataUtils.setTimes(player, YamlUtils.getConfigInt("Tower." + towerName + ".default", Main.pluginName), towerName);
+                DataUtils.setTimes(player, YamlUtils.getConfigInt("Tower." + towerName + ".Times.default", Main.pluginName), towerName);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             try {
-                DataUtils.setTimes(player, YamlUtils.getConfigInt("Tower." + towerName + ".default", Main.pluginName), towerName);
-            } catch (IOException ioException) {
+                DataUtils.setTimes(player, YamlUtils.getConfigInt("Tower." + towerName + ".Times.default", Main.pluginName), towerName);
+            } catch (Exception ioException) {
                 ioException.printStackTrace();
             }
         }
-        return conf.getInt(towerName + ".times");
+        conf = YamlConfiguration.loadConfiguration(new File("plugins/ZPokeBoost/Times/" + player.getName() + ".yml"));
+        return conf.getInt(towerName+".times");
     }
 
     public static void setTimes(Player player, int times, String towerName) throws IOException {

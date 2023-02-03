@@ -40,12 +40,12 @@ public class BattleListener implements Listener {
             //判断处于无尽试炼状态
             if (!DataUtils.noTower(player.getUniqueId())) {
                 //赢了一轮无尽试炼后
-                for (String times : Main.getInstance().getConfig().getConfigurationSection("Commands.win").getKeys(false)) {
+                YamlConfiguration tower = YamlConfiguration.loadConfiguration(new File("plugins/ZPokeBoost/TowerSetting/" + DataUtils.getPlayerState().get(player.getUniqueId()) + ".yml"));
+                for (String times : tower.getConfigurationSection("Commands.win").getKeys(false)) {
                     int integer = Integer.parseInt(times);
-                    if (integer == DataUtils.getPlayerWinTimes().getOrDefault(player.getUniqueId(), 0)) {
+                    if (integer == DataUtils.getPlayerWinTimes().getOrDefault(player.getUniqueId(), 1)) {
                         //TODO 试炼塔对应奖励指令
-                        YamlConfiguration tower = YamlConfiguration.loadConfiguration(new File("plugins/ZPokeBoost/TowerSetting/" + DataUtils.getPlayerState().get(player.getUniqueId()) + ".yml"));
-                        for (String cmd : tower.getStringList("Commands.win" + integer)) {
+                        for (String cmd : tower.getStringList("Commands.win." + integer)) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd.replace("%player%", player.getName()).replace("%tower%", DataUtils.getPlayerState().get(player.getUniqueId())));
                         }
                         break;

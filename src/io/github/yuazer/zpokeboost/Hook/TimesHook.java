@@ -17,11 +17,7 @@ public class TimesHook extends PlaceholderHook {
         if (indentifier.contains("_")) {
             String[] args = indentifier.split("_");
             if (args[0].equalsIgnoreCase("times")) {
-                try {
-                    return String.valueOf(DataUtils.getTimes(p, args[1]));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                return String.valueOf(DataUtils.getTimes(p, args[1]));
             }
         }
 

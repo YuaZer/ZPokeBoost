@@ -111,7 +111,7 @@ public class Main extends JavaPlugin {
             if (args[0].equalsIgnoreCase("setTimes") && sender.isOp()) {
                 Player player = Bukkit.getPlayer(args[1]);
                 try {
-                    DataUtils.setTimes(player, Integer.parseInt(args[2]),args[3]);
+                    DataUtils.setTimes(player, Integer.parseInt(args[2]), args[3]);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ArrayIndexOutOfBoundsException e1) {
@@ -127,6 +127,7 @@ public class Main extends JavaPlugin {
                         if (DataUtils.getTimes(player, towerName) > 0) {
                             BattleUtils.battlePokemon(player, DataUtils.getTeam_NBT(towerName));
                             DataUtils.setState(player.getUniqueId(), args[1]);
+                            DataUtils.setTimes(player, DataUtils.getTimes(player, towerName) - 1, towerName);
                         } else {
                             player.sendMessage(YamlUtils.getConfigMessage("Message.noTimes", Main.pluginName));
                         }
