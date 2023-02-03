@@ -9,12 +9,17 @@ Times:
   reset: "0000"
 Tower:
   金币试炼:
+    #挑战模式：
+    # ONLY 一次性挑战
+    # ENDLESS 无尽挑战
+    mode: "ONLY"
     Times:
       #默认3次
       default: 3
       commands:
         - "broadcast 金币挑战塔挑战次数重置!"
   无尽试炼:
+    mode: "ENDLESS"
     Times:
       #默认1次
       default: 1

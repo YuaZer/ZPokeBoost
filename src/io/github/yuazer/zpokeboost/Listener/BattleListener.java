@@ -53,11 +53,15 @@ public class BattleListener implements Listener {
                 }
                 //判断玩家精灵没死光
                 if (!allDead(player)) {
-                    player.sendMessage(YamlUtils.getConfigMessage("Message.next", Main.pluginName));
-                    //执行下一轮无尽试炼
-                    BattleUtils.battlePokemon(player, DataUtils.getTeam_NBT(DataUtils.getPlayerState().get(player.getUniqueId())));
-                    //增加挑战成功轮数
-                    DataUtils.getPlayerWinTimes().put(player.getUniqueId(), DataUtils.getPlayerWinTimes().getOrDefault(player.getUniqueId(), 0) + 1);
+                    if (YamlUtils.getConfigMessage("Tower." + DataUtils.getPlayerState().get(player.getUniqueId()) + ".mode", Main.pluginName).equalsIgnoreCase("ONLY")) {
+                        return;
+                    }else {
+                        player.sendMessage(YamlUtils.getConfigMessage("Message.next", Main.pluginName));
+                        //执行下一轮无尽试炼
+                        BattleUtils.battlePokemon(player, DataUtils.getTeam_NBT(DataUtils.getPlayerState().get(player.getUniqueId())));
+                        //增加挑战成功轮数
+                        DataUtils.getPlayerWinTimes().put(player.getUniqueId(), DataUtils.getPlayerWinTimes().getOrDefault(player.getUniqueId(), 0) + 1);
+                    }
                 }
             }
         }
