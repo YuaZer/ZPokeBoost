@@ -4,8 +4,6 @@ import io.github.yuazer.zpokeboost.Utils.DataUtils;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
-
 public class TimesHook extends PlaceholderHook {
     private static final String hook_name = "zpokeboost";
 
