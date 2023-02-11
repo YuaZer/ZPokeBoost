@@ -30,12 +30,12 @@ public class TimeUtils {
             //TODO 重置所有玩家挑战次数
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (String towerName : Main.getInstance().getConfig().getConfigurationSection("Tower").getKeys(false)) {
-                    DataUtils.setTimes(player, YamlUtils.getConfigInt("Tower." + towerName + ".default", Main.pluginName), towerName);
+                    DataUtils.setTimes(player, YamlUtils.getConfigInt("Tower." + towerName + ".Times.default", Main.pluginName), towerName);
                 }
             }
             //TODO 执行所有试炼塔的重置指令
             for (String towerName : Main.getInstance().getConfig().getConfigurationSection("Tower").getKeys(false)) {
-                for (String cmd : YamlUtils.getConfigStringList("Tower." + towerName + ".commands", Main.pluginName)) {
+                for (String cmd : YamlUtils.getConfigStringList("Tower." + towerName + ".Times.commands", Main.pluginName)) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
                 }
             }
